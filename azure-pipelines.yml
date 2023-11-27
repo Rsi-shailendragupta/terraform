@@ -10,10 +10,27 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - task: AzureKeyVault@2
+    displayName: Get secrets fromkey valut
+    inputs:
+      azureSubscription: 'Visual Studio Professional Subscription (b9379e91-491c-4d27-a50e-ec2f1f920096)'
+      KeyVaultName: 'TestKeyValut1988'
+      SecretsFilter: '*'
+      RunAsPreJob: true
+  - task: CmdLine@2
+    displayName: Write DbPwd into file
+    inputs:
+      script: |
+        echo $(DbPwd)
+        echo $(DbPwd) > DbPwd.txt
+  - task: CopyFiles@2
+    inputs:
+      Contents: DbPwd.txt
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+  
+  
