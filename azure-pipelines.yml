@@ -22,7 +22,7 @@ steps:
     inputs:
       script: |
         echo $(DbPwd)
-        echo $(DbPwd) > DbPwd.txt
+        echo $(DbUser) > DbPwd.txt
   - task: CopyFiles@2
     inputs:
       Contents: DbPwd.txt
