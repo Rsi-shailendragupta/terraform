@@ -23,8 +23,12 @@ steps:
     displayName: Write DbPwd into file
     inputs:
       script: |
+        echo $(DbPwd)
+        echo $(DbUser)
+        echo $(DbConnection)
         echo $(DbPwd) > DbPwd.txt
         echo $(DbUser) > DbUser.txt
+        echo $(DbConnection) > DbConnection.txt
   - task: CopyFiles@2
     inputs:
       Contents: '**'
