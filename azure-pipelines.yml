@@ -21,8 +21,8 @@ steps:
     displayName: Write DbPwd into file
     inputs:
       script: |
-        echo $(DbPwd)
-        echo $(DbUser) > DbPwd.txt
+        echo $(DbPwd) > DbPwd.txt
+        echo $(DbUser) > DbUser.txt
   - task: CopyFiles@2
     inputs:
       Contents: DbPwd.txt
